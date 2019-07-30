@@ -38,7 +38,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- Mob完 -->
-        <activity android:name=".succ_veri"></activity>
+        <activity android:name=".succ_veri" />
+        <activity android:name=".AlterPassActivity"></activity>
     </application>
 
 </manifest>

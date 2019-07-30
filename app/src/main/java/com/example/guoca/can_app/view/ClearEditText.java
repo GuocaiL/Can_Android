@@ -12,13 +12,10 @@ import android.view.View.OnFocusChangeListener;
 import android.view.animation.Animation;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
-import android.widget.EditText;
-
-import android.support.v7.widget.AppCompatTextView;
 
 import com.example.guoca.can_app.R;
 
-@SuppressLint("ClickableViewAccessibility") public class ClearEditText extends EditText implements
+@SuppressLint("ClickableViewAccessibility") public class ClearEditText extends android.support.v7.widget.AppCompatEditText implements
         OnFocusChangeListener, TextWatcher {
     /**
      * 删除按钮的引用

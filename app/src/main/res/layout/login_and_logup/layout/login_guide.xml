@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/first_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/login_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账    号："
+            android:textSize="20dp"/>
+        <com.example.guoca.can_app.view.ClearEditText
+            android:id="@+id/tel_clearEdittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="用户名/手机号"
+            android:ems="10"
+            android:textAlignment="center"
+            android:background="@drawable/input_veri_edit"
+             />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/second_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_below="@id/first_line"
+        android:layout_marginTop="20dp">
+        <TextView
+            android:id="@+id/login_passname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="密    码："
+            android:textSize="20dp"/>
+        <com.example.guoca.can_app.view.ClearEditText
+            android:id="@+id/login_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="请输入密码"
+            android:ems="10"
+            android:textAlignment="center"
+            android:background="@drawable/input_veri_edit"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/zhuce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="注册"
+        android:clickable="true"
+        android:layout_below="@id/second_line"
+        android:layout_alignLeft="@id/second_line"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/forget_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="忘记密码？"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/second_line"
+        android:layout_alignRight="@id/second_line"
+        android:clickable="true"/>
+
+</RelativeLayout>

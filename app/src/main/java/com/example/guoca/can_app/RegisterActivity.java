@@ -22,6 +22,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private String AppKey = "2b9fa6c550690";
     private String AppSecret = "71b85991f8d7c8bf34352332d66826c5";
 
+    //注册昵称
+    private EditText registerName;
+
     // 手机号输入框
     private EditText inputPhoneEt;
 
@@ -43,6 +46,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     //倒计时显示   可以手动更改。
     int i = 30;
 
+    //注册提示信息
+    private String inputMessge="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         commitBtn = (Button) findViewById(R.id.login_commit_btn);
         requestCodeBtn.setOnClickListener(this);
         commitBtn.setOnClickListener(this);
+        registerName.findViewById(R.id.register_name);
 
         // 启动短信验证sdk
         MobSDK.init(this, AppKey, AppSecret);
@@ -92,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 // 3. 把按钮变成不可点击，并且显示倒计时（正在获取）
                 requestCodeBtn.setClickable(false);
-                requestCodeBtn.setText("重新发送(" + i + ")");
+                requestCodeBtn.setText("发送" + i);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -113,10 +120,32 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.login_commit_btn:
-                //将收到的验证码和手机号提交再次核对
-                SMSSDK.submitVerificationCode("86", phoneNums, inputCodeEt
-                        .getText().toString());
-                break;
+                //判断两次密码是否相同
+                if (pass.getText()!=veri_pass.getText())
+                {Toast.makeText(getApplicationContext(), "两次密码不一致",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                else {
+                    //查询手机号和昵称有没有被注册
+                    Boolean nicheng=true;
+                    Boolean te=true;
+//                    //此处为sql语句，得到两个标识符，昵称注册成功与否标识符，已注册得到false，否则为true,手机号同理
+//                    if (!nicheng){
+//                        Toast.makeText(getApplicationContext(), "用户名已被注册",
+//                                Toast.LENGTH_SHORT).show();
+//                    }else if (!te){
+//                        Toast.makeText(getApplicationContext(), "手机号已被注册",
+//                                Toast.LENGTH_SHORT).show();
+//                    }else {
+                        //将收到的验证码和手机号提交再次核对
+                        SMSSDK.submitVerificationCode("86", phoneNums, inputCodeEt
+                                .getText().toString());
+//                        break;
+//                    }
+                }
+
+
         }
     }
 
@@ -126,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             if (msg.what == -9) {
-                requestCodeBtn.setText("重新发送(" + i + ")");
+                requestCodeBtn.setText("发送" + i);
             } else if (msg.what == -8) {
                 requestCodeBtn.setText("获取验证码");
                 requestCodeBtn.setClickable(true);
@@ -139,14 +168,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     // 短信注册成功后，返回MainActivity,然后提示
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {// 提交验证码成功
-                        Toast.makeText(getApplicationContext(), "提交验证码成功",
-                                Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(RegisterActivity.this,
-                                succ_veri.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("userName",inputPhoneEt.getText().toString().trim());
-                        intent.putExtras(bundle);
-                        startActivity(intent);
+                        //此处为提交注册信息保存到数据库中的sql语句，得到response为true或false的结果
+//                        Boolean submit=
+//                        if(submit){
+                            Toast.makeText(getApplicationContext(), "注册成功",
+                                    Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegisterActivity.this,
+                                    succ_veri.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("userName",inputPhoneEt.getText().toString().trim());
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+//                        }else {
+//                            Toast.makeText(getApplicationContext(), "未知错误，请重新注册",
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
+
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         Toast.makeText(getApplicationContext(), "正在获取验证码",
                                 Toast.LENGTH_SHORT).show();

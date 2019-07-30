@@ -1,13 +1,13 @@
 package com.example.guoca.can_app;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.guoca.can_app.adapter.GuideAdapter;
@@ -19,10 +19,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     private TextView zhuce,forget_pass;
     private ViewPager login_viewpager;
+    private ImageButton methods[];
     private Button login_button;
     private List<View> views;
     private GuideAdapter guideAdapter;
-    private TextView methods[];
 
     private void initView(){
         login_viewpager=(ViewPager) findViewById(R.id.login_viewpager);
@@ -31,12 +31,14 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         views.add(LayoutInflater.from(this).inflate(R.layout.tel_login_guide,null));
         guideAdapter=new GuideAdapter(this,views);
         login_viewpager.setAdapter(guideAdapter);
-        methods=new TextView[]{
-                (TextView) findViewById(R.id.count_pass_method),
-                (TextView) findViewById(R.id.tel_veri_method)
+        methods=new ImageButton[]{
+                (ImageButton) findViewById(R.id.count_pass_method_white),
+                (ImageButton) findViewById(R.id.count_pass_method_blue),
+                (ImageButton) findViewById(R.id.veri_login_btn_white),
+                (ImageButton) findViewById(R.id.veri_login_btn_blue)
         };
         zhuce= (TextView)views.get(0).findViewById(R.id.zhuce);
-
+        forget_pass= (TextView) views.get(0).findViewById(R.id.forget_pass);
     }
 
     private void setLisenter(){
@@ -49,6 +51,14 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 startActivity(start_zhuce);
             }
         });
+        forget_pass.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent start_alter_pass=new Intent(MainActivity.this,AlterPassActivity.class);
+                startActivity(start_alter_pass);
+            }
+        });
     }
 
     @Override
@@ -57,9 +67,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         setContentView(R.layout.activity_main);
         initView();
         setLisenter();
-
-
-
     }
 
     @Override
@@ -69,8 +76,19 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @Override
     public void onPageSelected(int position) {
-        methods[position].setTextColor(Color.parseColor("#FFE4C4"));
-        methods[Math.abs(position-1)].setTextColor(Color.parseColor("#A9A9A9"));
+        if(position==0){
+            methods[0].setVisibility(View.VISIBLE);
+            methods[1].setVisibility(View.GONE);
+            methods[2].setVisibility(View.GONE);
+            methods[3].setVisibility(View.VISIBLE);
+        }
+        else {
+            methods[0].setVisibility(View.GONE);
+            methods[1].setVisibility(View.VISIBLE);
+            methods[2].setVisibility(View.VISIBLE);
+            methods[3].setVisibility(View.GONE);
+        }
+
     }
 
     @Override

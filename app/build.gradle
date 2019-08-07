@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+// 添加插件
+/*apply plugin: 'com.mob.sdk'*/
+
 
 android {
     compileSdkVersion 25
@@ -23,6 +26,7 @@ android {
             res.srcDirs=
                     [
                             'src/main/res/layout/common',
+                            'src/main/res/layout/calendar',
                             'src/main/res/layout/login_and_logup',
                             'src/main/res/layout',
                             'src/main/res'
@@ -31,7 +35,21 @@ android {
     }
 }
 
+// 在MobSDK的扩展中注册SMSSDK的相关信息
+/*MobSDK {
+    appKey "2b9fa6c550690"
+    appSecret "71b85991f8d7c8bf34352332d66826c5"
 
+    SMSSDK {
+        //默认使用GUI，若不使用GUI，通过以下开关关闭
+        gui false
+        //若使用GUI的自动填充验证码功能，需打开此设置
+        autoSMS true
+    }
+    repositories {
+        jcenter()
+    }
+}*/
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -40,6 +58,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
     compile 'com.android.support:design:25.3.1'
+    // https://mvnrepository.com/artifact/com.alibaba/fastjson
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.58'
     testCompile 'junit:junit:4.12'
 }
 
